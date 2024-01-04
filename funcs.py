@@ -24,4 +24,14 @@ def is_premier(N):
 			return True
 
 def is_arithmetic(list):
-	pass
+	flag = 0
+	first = list[0]
+	recurrence = list[1] - list[0]
+	for i in range(len(list)):
+		if list[i] != first + i*recurrence:
+			flag = 1
+			break
+	if flag:
+		return False
+	else:
+		return True
