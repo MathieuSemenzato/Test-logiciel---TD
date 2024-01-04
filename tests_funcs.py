@@ -29,5 +29,25 @@ class TestMinListInt(unittest.TestCase):
 	def test_double(self):
 		self.assertEqual(funcs.min_list_int([-4,-3,-4,-3,-5], 3), [-5,-4,-4])
 
+
+class TestIsPremier(unittest.TestCase):
+	def test_NegativeNumber(self):
+		self.assertEqual(funcs.is_premier(-12), False)
+		self.assertEqual(funcs.is_premier(-1), False)
+		self.assertEqual(funcs.is_premier(-2), True)
+		self.assertEqual(funcs.is_premier(-89), True)
+		self.assertEqual(funcs.is_premier(-50), False)
+
+	def test_PositiveNumber(self):
+		self.assertEqual(funcs.is_premier(12), False)
+		self.assertEqual(funcs.is_premier(1), False)
+		self.assertEqual(funcs.is_premier(2), True)
+		self.assertEqual(funcs.is_premier(89), True)
+		self.assertEqual(funcs.is_premier(50), False)
+
+	def test_zero(self):
+		self.assertEqual(funcs.is_premier(0), False)
+
+
 if __name__ == '__main__':
 	unittest.main()

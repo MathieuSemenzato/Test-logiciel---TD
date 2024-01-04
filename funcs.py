@@ -7,3 +7,6 @@ def min_list_int(list, N):
 	retour = sorted(list, reverse = False)
 
 	return retour[0:N]
+
+def is_premier(number):
+	pass
