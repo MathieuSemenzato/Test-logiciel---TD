@@ -22,3 +22,6 @@ def is_premier(N):
 			return False
 		else:
 			return True
+
+def is_arithmetic(list):
+	pass

@@ -48,6 +48,17 @@ class TestIsPremier(unittest.TestCase):
 	def test_zero(self):
 		self.assertEqual(funcs.is_premier(0), False)
 
+class TestisArithmeticSuite(unittest.TestCase):
+	def test_freeze(self):
+		self.assertEqual(funcs.is_arithmetic([1,1,1,1,1]), True)
+		self.assertEqual(funcs.is_arithmetic([1,0,0,0,0]), False)
+		self.assertEqual(funcs.is_arithmetic([0,1,1,1,1]), False)
+		
+	def test_classic(self):
+		self.assertEqual(funcs.is_arithmetic([1,1,3,5,7]), False)
+		self.assertEqual(funcs.is_arithmetic([1,3,5,7,9]), True)
+		self.assertEqual(funcs.is_arithmetic([0,2,4,6,8]), True)
+
 
 if __name__ == '__main__':
 	unittest.main()
