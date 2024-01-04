@@ -24,6 +24,9 @@ def is_premier(N):
 			return True
 
 def is_arithmetic(list):
+	if len(list) < 3:
+		print("not enough elements to consider this a suite\n")
+		return False
 	flag = 0
 	first = list[0]
 	recurrence = list[1] - list[0]
@@ -35,3 +38,6 @@ def is_arithmetic(list):
 		return False
 	else:
 		return True
+
+def is_geometric(list):
+	pass
