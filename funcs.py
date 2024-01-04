@@ -40,4 +40,20 @@ def is_arithmetic(list):
 		return True
 
 def is_geometric(list):
-	pass
+	if len(list) < 3:
+		print("not enough elements to consider this a suite\n")
+		return False
+	flag = 0
+	first = list[0]
+	if list[0] == 0:
+		recurrence = list[1]
+	else:
+		recurrence = list[1]/list[0]
+	for i in range(1,len(list)):
+		if list[i] != first * recurrence**i:
+			flag = 1
+			break
+	if flag:
+		return False
+	else:
+		return True
