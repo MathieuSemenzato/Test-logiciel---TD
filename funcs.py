@@ -4,4 +4,6 @@ def max_list_int(list):
 	return retour[0:3]
 
 def min_list_int(list, N):
-	pass
+	retour = sorted(list, reverse = False)
+
+	return retour[0:N]
