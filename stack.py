@@ -1,4 +1,4 @@
-class Stack:
+class FIFO:
 	def __init__(self):
 		self.values = []
 		self.max_element = 3 # indique une taille maximale pour la pile
@@ -22,3 +22,14 @@ class Stack:
 			del self.values[0]
 
 		return self.values
+
+class LIFO:
+	def __init__(self):
+		self.values = []
+		self.max_element = 3 # indique une taille maximale pour la pile
+
+	def insert_data_lifo(self, data):
+		pass
+
+	def remove_data_lifo(self):
+		pass
