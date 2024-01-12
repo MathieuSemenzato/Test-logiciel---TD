@@ -1,37 +1,35 @@
 #include <stdlib.h>
 #include<stdio.h>
-#include "fonction.h"
+#include "fonction_bis.h"
 #include<time.h>
 
 int main()
 {
-	// initialisation des paramètres du labyrinthe
+	/*
+	initialisation des paramètres du labyrinthe
+	on utilise des variables globales afin de permettre une mise à jour directement dans les fonctions
+	cela rend le code plus lisible et, puisque l'on exécute une boucle assez longue permet d'éviter de définir constamment
+	de nouvelles variables locales
+	*/
 	int tailleLigne = regles_et_init();
 	int coordonne_personnage=tailleLigne+1;
 	int tailleLaby = tailleLigne * tailleLigne;
 	char tab[tailleLaby];
 	char deplacement;
-	int compt;
+	int *compt = malloc(sizeof(int));
 	
-	system("clear");
-	creeLabyrinthe(tab,tailleLigne,tailleLaby);
-	//printf("si il n'y a pas d'issues possibles, tapez la lettre p\n");
+	creeLabyrinthe(tab,tailleLigne,tailleLaby, compt);
 
 	while(1)
 	{
 		afficheLabyrinthe(tab,tailleLigne,tailleLaby,coordonne_personnage);
-		scanf(" %c",&deplacement);
-		compt=compt+1;
-		if(deplacement==112)
-		{
-			creeLabyrinthe(tab,tailleLigne,tailleLaby);
-			coordonne_personnage=tailleLigne+1;
-		}	
-		coordonne_personnage=deplacePersonnage(tab,coordonne_personnage,deplacement,tailleLigne);
-		system("clear");
+		deplacement = deplacer(tab, tailleLigne, tailleLaby, coordonne_personnage, compt);
+		coordonne_personnage=deplacePersonnage(tab,coordonne_personnage,deplacement,tailleLigne, compt);
+		
+		// On regarde si l'on a atteint la sortie du labyrinthe
 		if(tab[coordonne_personnage]=='/')
 		{
-			printf("Bravo, mission réussie! En %d coups!\n",compt);
+			printf("Bravo, mission réussie! En %d coups!\n", *compt);
 			break;
 		}
 	}
