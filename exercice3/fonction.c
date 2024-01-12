@@ -2,6 +2,9 @@
 #include<stdio.h>
 #include<time.h>
 
+//char deplacement;
+//int compt;
+
 int regles_et_init()
 {
 	system("clear");
@@ -15,8 +18,9 @@ int regles_et_init()
 	return tailleLigne;
 }
 
-void creeLabyrinthe(char* tab,int tailleLigne,int tailleLaby)
+void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_personnage, int compt)
 {
+	system("clear");
 	int c;
 	int i;
 	srand( time( NULL ) );
@@ -78,12 +82,10 @@ void creeLabyrinthe(char* tab,int tailleLigne,int tailleLaby)
 				//cpt ++;
 			}
 		}
-		
 		if (change == 1)
 		{
 			cpt ++;
 		}
-		
 	}
 	tab[deplacement] = '/';
 
@@ -115,6 +117,13 @@ void creeLabyrinthe(char* tab,int tailleLigne,int tailleLaby)
 		}
 	}
 	tab[tailleLigne+1]='v';
+
+	/*
+	a chaque fois qu'on cree un nouveau labyrinthe le compteur est remis à zéro
+	et la coordonnée du personnage est remis à la case départ
+	*/
+	coordonne_personnage=tailleLigne+1;
+	compt = 0;
 }
 
 void afficheLabyrinthe(char* tab,int tailleLigne,int tailleLaby,int coordonne_personnage)
@@ -144,8 +153,19 @@ void afficheLabyrinthe(char* tab,int tailleLigne,int tailleLaby,int coordonne_pe
 	printf("\n");
 }
 
+void deplacer(char deplacement, int compt)
+{
+	printf("Veuillez déplacer votre pion sur le labyrinthe : ");
+	scanf(" %c",&deplacement);
+	compt ++;
 
-int deplacePersonnage(char* tab,int coordonne_personnage,int deplacement,int tailleLigne)
+	if(deplacement==112)
+	{
+			creeLabyrinthe(tab,tailleLigne,tailleLaby, coordonne_personnage, compt);
+	}
+}
+
+void deplacePersonnage(char* tab,int coordonne_personnage,int deplacement,int tailleLigne)
 {
 	if (deplacement==100){
 		if((tab[coordonne_personnage+1]!='#')&&((tab[coordonne_personnage+1]!='*')))
@@ -171,6 +191,6 @@ int deplacePersonnage(char* tab,int coordonne_personnage,int deplacement,int tai
 			coordonne_personnage=coordonne_personnage+tailleLigne;
 		}
 	}
-return coordonne_personnage;
+	system("clear");
 }
 
