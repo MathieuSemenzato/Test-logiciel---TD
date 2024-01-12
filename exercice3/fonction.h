@@ -1,10 +1,13 @@
-#ifndef __FONCTION__
-#define __FONCTION__
+#ifndef __FONCTION_BIS__
+#define __FONCTION_BIS__
 
 int regles_et_init();
-void creeLabyrinthe(char* tab,int tailleLigne,int tailleLaby, int coordonne_personnage, int compt);
+void creer_bordures(char* tab,int tailleLigne,int tailleLaby);
+void creer_obstacles(char* tab, int tailleLigne);
+void finalise_creation(char* tab,int tailleLigne,int tailleLaby, int *compt);
+void creeLabyrinthe(char* tab,int tailleLigne,int tailleLaby, int *compt);
 void afficheLabyrinthe(char* tab,int tailleLigne,int tailleLaby,int coordonne_personnage);
-void deplacer(char deplacement, int compt);
-void deplacePersonnage(char* tab,int coordonne_personnage,int deplacement,int tailleLigne);
+char deplacer(char* tab,int tailleLigne, int tailleLaby, int coordonne_personnage, int *compt);
+int deplacePersonnage(char* tab,int coordonne_personnage,int deplacement,int tailleLigne, int *compt);
 
 #endif

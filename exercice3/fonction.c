@@ -2,9 +2,6 @@
 #include<stdio.h>
 #include<time.h>
 
-//char deplacement;
-//int compt;
-
 int regles_et_init()
 {
 	system("clear");
@@ -18,13 +15,11 @@ int regles_et_init()
 	return tailleLigne;
 }
 
-void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_personnage, int compt)
+void creer_bordures(char* tab,int tailleLigne,int tailleLaby)
 {
 	system("clear");
-	int c;
-	int i;
 	srand( time( NULL ) );
-	for (i=0; i< tailleLaby; i++)
+	for (int i=0; i< tailleLaby; i++)
 	{
 		if (i < tailleLigne )
 		{
@@ -44,6 +39,10 @@ void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_per
 			
 		}	
 	}
+}
+
+void creer_obstacles(char* tab, int tailleLigne)
+{
 	int cpt = 0;
 	int deplacement = tailleLigne+1;
 	int change;
@@ -59,7 +58,6 @@ void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_per
 				tab[deplacement+1] = ' '; //le chiffre 1 corresponds au parcours praticable pour trouver la sortie
 				deplacement = deplacement + 1;
 				change = 1;
-				//cpt ++;
 			}
 		}
 		else if (aleat == 1)
@@ -69,7 +67,6 @@ void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_per
 				tab[deplacement+tailleLigne] = ' '; //le chiffre 1 corresponds au parcours praticable pour trouver la sortie
 				deplacement = deplacement + tailleLigne;
 				change = 1;
-				//cpt ++;
 			}
 		}
 		else
@@ -78,20 +75,26 @@ void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_per
 			{
 				tab[deplacement-1] = ' '; //le chiffre 1 corresponds au parcours praticable pour trouver la sortie
 				deplacement = deplacement - 1;
-				change = 1;	
-				//cpt ++;
+				change = 1;
 			}
 		}
+		
 		if (change == 1)
 		{
 			cpt ++;
 		}
+		
 	}
 	tab[deplacement] = '/';
+}
 
+void finalise_creation(char* tab,int tailleLigne,int tailleLaby, int *compt)
+{
+	
+	int c;
 	if(tailleLigne>9)
 	{
-		for(i=0;i<2*tailleLigne;i++)
+		for(int i=0;i<2*tailleLigne;i++)
 		{
 			c=rand() % (tailleLaby/2);
 			while((tab[c]!='#'))
@@ -107,7 +110,7 @@ void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_per
 	}
 	else
 	{
-		for(i=0;i<2*tailleLigne-i;i++)
+		for(int i=0;i<2*tailleLigne-i;i++)
 		{
 			c=rand() % (tailleLaby);
 			if((tab[c]=='#'))
@@ -117,21 +120,20 @@ void creeLabyrinthe(char* tab,int tailleLigne, int tailleLaby, int coordonne_per
 		}
 	}
 	tab[tailleLigne+1]='v';
+	*compt = 0;
+}
 
-	/*
-	a chaque fois qu'on cree un nouveau labyrinthe le compteur est remis à zéro
-	et la coordonnée du personnage est remis à la case départ
-	*/
-	coordonne_personnage=tailleLigne+1;
-	compt = 0;
+void creeLabyrinthe(char* tab,int tailleLigne,int tailleLaby, int *compt)
+{
+	creer_bordures(tab,tailleLigne,tailleLaby);
+	creer_obstacles(tab, tailleLigne);
+	finalise_creation(tab, tailleLigne, tailleLaby, compt);
 }
 
 void afficheLabyrinthe(char* tab,int tailleLigne,int tailleLaby,int coordonne_personnage)
 {
 	printf("si il n'y a pas d'issues possibles, tapez la lettre p\n");
-	int i;
-	
-	for (i=0; i<tailleLaby; i++)
+	for (int i=0; i<tailleLaby; i++)
 	{
 		if (i % tailleLigne == 0)
 		{
@@ -141,7 +143,7 @@ void afficheLabyrinthe(char* tab,int tailleLigne,int tailleLaby,int coordonne_pe
 		{
 		tab[i]=' ';
 		}
-		if( i == coordonne_personnage)
+		if(i == coordonne_personnage)
 		{	
 			
 			if(tab[i]!='#'){
@@ -153,43 +155,50 @@ void afficheLabyrinthe(char* tab,int tailleLigne,int tailleLaby,int coordonne_pe
 	printf("\n");
 }
 
-void deplacer(char deplacement, int compt)
+char deplacer(char* tab,int tailleLigne, int tailleLaby, int coordonne_personnage, int *compt)
 {
 	printf("Veuillez déplacer votre pion sur le labyrinthe : ");
+	char deplacement;
 	scanf(" %c",&deplacement);
-	compt ++;
 
 	if(deplacement==112)
 	{
-			creeLabyrinthe(tab,tailleLigne,tailleLaby, coordonne_personnage, compt);
+			creeLabyrinthe(tab,tailleLigne,tailleLaby, compt);
 	}
+	return deplacement;
 }
 
-void deplacePersonnage(char* tab,int coordonne_personnage,int deplacement,int tailleLigne)
+
+int deplacePersonnage(char* tab,int coordonne_personnage,int deplacement,int tailleLigne, int *compt)
 {
 	if (deplacement==100){
 		if((tab[coordonne_personnage+1]!='#')&&((tab[coordonne_personnage+1]!='*')))
 		{
 			coordonne_personnage=coordonne_personnage+1;
+			*compt += 1;
 		}
 	}
 	else if  (deplacement==113){
 		if((tab[coordonne_personnage-1]!='#')&&(tab[coordonne_personnage-1]!='*'))
 		{
 			coordonne_personnage=coordonne_personnage-1;
+			*compt += 1;
 		}
 	}
 	else if  (deplacement==122){
 		if((tab[coordonne_personnage-tailleLigne]!='#')&&(tab[coordonne_personnage-tailleLigne]!='*'))
 		{
 			coordonne_personnage=coordonne_personnage-tailleLigne;
+			*compt += 1;
 		}
 	}
 	else if  (deplacement==115){
 		if((tab[coordonne_personnage+tailleLigne]!='#')&&(tab[coordonne_personnage+tailleLigne]!='*'))
 		{
 			coordonne_personnage=coordonne_personnage+tailleLigne;
+			*compt += 1;
 		}
 	}
 	system("clear");
+	return coordonne_personnage;
 }
