@@ -45,10 +45,8 @@ void creer_bordures(char* tab,int tailleLigne,int tailleLaby)
 
 void creer_obstacles(char* tab, int tailleLigne)
 {
-	int cpt = 0;
+	int cpt = 0, change, aleat;
 	int deplacement = tailleLigne+1;
-	int change;
-	int aleat;
 	
 	while (cpt != 8 + 5*(tailleLigne-6))
 	{
