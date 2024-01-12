@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include<stdio.h>
-#include "fonction_bis.h"
+#include "fonction.h"
 #include<time.h>
 
 int main()
@@ -12,22 +12,22 @@ int main()
 	de nouvelles variables locales
 	*/
 	int tailleLigne = regles_et_init();
-	int coordonne_personnage=tailleLigne+1;
+	int *coordonne_personnage=malloc(sizeof(int));
 	int tailleLaby = tailleLigne * tailleLigne;
 	char tab[tailleLaby];
 	char deplacement;
 	int *compt = malloc(sizeof(int));
 	
-	creeLabyrinthe(tab,tailleLigne,tailleLaby, compt);
+	creeLabyrinthe(tab, tailleLigne, tailleLaby, compt, coordonne_personnage);
 
 	while(1)
 	{
 		afficheLabyrinthe(tab,tailleLigne,tailleLaby,coordonne_personnage);
-		deplacement = deplacer(tab, tailleLigne, tailleLaby, coordonne_personnage, compt);
-		coordonne_personnage=deplacePersonnage(tab,coordonne_personnage,deplacement,tailleLigne, compt);
+		deplacement = deplacer(tab, tailleLigne, tailleLaby, compt, coordonne_personnage);
+		deplacePersonnage(tab,coordonne_personnage,deplacement,tailleLigne, compt);
 		
 		// On regarde si l'on a atteint la sortie du labyrinthe
-		if(tab[coordonne_personnage]=='/')
+		if(tab[*coordonne_personnage]=='/')
 		{
 			printf("Bravo, mission réussie! En %d coups!\n", *compt);
 			break;
